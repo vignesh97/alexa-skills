@@ -3,6 +3,7 @@ var Alexa = require('alexa-sdk');
 
 var alexaMeetups = require("./data/alexaMeetups");
 
+var convertArrayToReadableString = require('./helpers/convertArrayToReadableString')
 exports.handler = function(event, context, callback){
   var alexa = Alexa.handler(event, context);
   alexa.registerHandlers(handlers);
@@ -85,7 +86,7 @@ if(cityMatch !== "")
   }
   else {
 
-      this.emit(':ask', `The organizer of the   ${city}  Alexa developer meetup are  ${cityOrganizers.toString()}! `, 'How can i help?');
+      this.emit(':ask', `The organizer of the   ${city}  Alexa developer meetup are  ${convertArrayToReadableString(cityOrganizers)}! `, 'How can i help?');
     }
 
 
