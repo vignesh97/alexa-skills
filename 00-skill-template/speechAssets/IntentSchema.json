@@ -27,6 +27,19 @@
           "type" : "AMAZON.EUROPE_CITY"
         }
       ]
+    },
+    {
+      "intent": "AlexaMeetupOrganiserCheck",
+      "slots": [
+        {
+          "name" : "USCity",
+          "type" : "AMAZON.US_CITY"
+        },
+        {
+          "name" : "EuropeCity",
+          "type" : "AMAZON.EUROPE_CITY"
+        }
+      ]
     }
   ]
 }

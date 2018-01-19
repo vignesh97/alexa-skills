@@ -27,8 +27,6 @@ var handlers = {
 'AlexaMeetupCityCheck' : function() {
   var USCitySlot = this.event.request.intent.slots.USCity.value;
   var EuropeCitySlot = this.event.request.intent.slots.EuropeCity.value;
-
-
   var city;
   if(USCitySlot){
     city=USCitySlot;
@@ -40,17 +38,12 @@ var handlers = {
     this.emit(':ask',"Sorry I didnt recongnize the city name", "How can I help?")
   }
 
-
-
 var cityMatch = "";
-
 for(var i=0;i<alexaMeetups.length;i++){
   if(alexaMeetups[i].city.toLowerCase()=== city.toLowerCase()){
     cityMatch = alexaMeetups[i].city;
   }
 }
-
-
 
 if(cityMatch !== "")
 {
@@ -59,6 +52,50 @@ if(cityMatch !== "")
 else{
   this.emit(':ask', `Sorry, we dont have meetup in your city  ${city}. `, 'How can i help?');
 }
+}
+,
+'AlexaMeetupOrganiserCheck' : function() {
+  var USCitySlot = this.event.request.intent.slots.USCity.value;
+  var EuropeCitySlot = this.event.request.intent.slots.EuropeCity.value;
+  var city;
+  if(USCitySlot){
+    city=USCitySlot;
+  }
+  else if (EuropeCitySlot){
+    city = EuropeCitySlot;
+  }
+  else{
+    this.emit(':ask',"Sorry I didnt recongnize the city name", "How can I help?")
+  }
+
+var cityMatch = "";
+var cityOrganizers;
+
+for(var i=0;i<alexaMeetups.length;i++){
+  if(alexaMeetups[i].city.toLowerCase()=== city.toLowerCase()){
+    cityMatch = alexaMeetups[i].city;
+    cityOrganizers = alexaMeetups[i].organisers;
+  }
+}
+
+if(cityMatch !== "")
+{
+  if(cityOrganizers.length ===1){
+    this.emit(':ask', `The organizer of the   ${city}  Alexa developer meetup is ${cityOrganizers[0]}! `, 'How can i help?');
+  }
+  else {
+
+      this.emit(':ask', `The organizer of the   ${city}  Alexa developer meetup are  ${cityOrganizers.toString()}! `, 'How can i help?');
+    }
+
 
 }
+else{
+  this.emit(':ask', `Sorry, we dont have meetup in your city  ${city}. `, 'How can i help?');
+}
+
+}
+
+
+
 };
