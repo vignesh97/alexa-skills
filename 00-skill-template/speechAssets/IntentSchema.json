@@ -1,6 +1,9 @@
 {
   "intents": [
     {
+      "intent": "Hello"
+    },
+    {
       "intent": "AMAZON.StopIntent"
     },
     {

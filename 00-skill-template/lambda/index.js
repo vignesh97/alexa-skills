@@ -10,6 +10,10 @@ var handlers = {
 
   'LaunchRequest': function () {
     this.emit(':ask', 'Welcome to Voice Devs!', 'Try saying hello!');
+  },
+
+  'Hello': function () {
+    this.emit(':tell', 'Hello Hi there');
   }
 
 };
