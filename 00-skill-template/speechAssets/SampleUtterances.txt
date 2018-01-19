@@ -1,3 +1,6 @@
 Hello hello
 Hello hi
 Hello hey
+
+AlexaMeetupNumbers how many cities have alexa meetups
+AlexaMeetupNumbers how many alexa meetups are there
