@@ -51,6 +51,15 @@
           "type" : "AMAZON.EUROPE_CITY"
         }
       ]
+    },
+    {
+      "intent" : "CountryCapture",
+      "slots":[
+        {
+          "name" : "CountryName",
+          "type" : "WORLD_COUNTRIES"
+        }
+      ]
     }
   ]
 }
