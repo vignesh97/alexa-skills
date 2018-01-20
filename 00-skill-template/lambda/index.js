@@ -12,13 +12,10 @@ exports.handler = function(event, context, callback){
 
 var handlers = {
 
-  'LaunchRequest': function () {
-    this.emit(':ask', 'Welcome to Voice Devs!', 'Try saying hello!');
-  },
 
-  'Hello': function () {
-    this.emit(':tell', 'Hello Hi there');
-  },
+'NewSession' : function(){
+  this.emit(":ask", "Welcome to Voice Devs, The skill that gives you information about the alexa developer community. But first, I like to get the know you better. Tell me your name:",'Tell me your name')
+},
 
 'AlexaMeetupNumbers' : function() {
   var meetupNumbers = alexaMeetups.length;
