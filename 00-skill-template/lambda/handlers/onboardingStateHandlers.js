@@ -73,6 +73,8 @@ var onboardingStateHandlers = Alexa.CreateStateHandler(constants.states.ONBOARDI
         this.emit(':saveState', true);
     },
     'AMAZON.HelpIntent': function() {
+      console.log("Onboarding Help");
+
         this.emit(':tell', 'Good Bye');
 
         var userName = this.attributes['userName'];
@@ -87,6 +89,8 @@ var onboardingStateHandlers = Alexa.CreateStateHandler(constants.states.ONBOARDI
     },
 
     'UnHandled': function() {
+      console.log("Onboarding UnHandled");
+
         this.emitWithState('AMAZON.HelpIntent');
     }
 

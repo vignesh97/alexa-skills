@@ -97,12 +97,13 @@ var mainStateHandlers = Alexa.CreateStateHandler(constants.states.MAIN, {
     },
 
     'AMAZON.HelpIntent': function() {
-
-        this.emit(':ask', ` You can ask me various alexa meetups around the world, or listen to the Alexa Dev Podcast. What do you like to do? `, 'You can ask me various alexa meetups around the world, or listen to the Alexa Dev Podcast. What do you like to do?');
+console.log("Main Help Intent");
+        this.emit(':ask', 'You can ask me various alexa meetups around the world, or listen to the Alexa Dev Podcast. What do you like to do? ', 'You can ask me various alexa meetups around the world, or listen to the Alexa Dev Podcast. What do you like to do?');
 
     },
 
     'UnHandled': function() {
+        console.log("Main UnHandled");
         this.emitWithState('AMAZON.HelpIntent');
     }
 });
