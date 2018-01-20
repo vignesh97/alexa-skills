@@ -12,11 +12,34 @@ exports.handler = function(event, context, callback){
 
 var handlers = {
 
-
 'NewSession' : function(){
-  this.emit(":ask", "Welcome to Voice Devs, The skill that gives you information about the alexa developer community. But first, I like to get the know you better. Tell me your name:",'Tell me your name')
+  this.emit(":ask", "Welcome to Voice Devs, The skill that gives you information about the alexa developer community. But first, I like to get the know you better. Tell me your name by Saying My is name and your name",'Tell me your name by saying My is name and your name');
 },
 
+'NameCapture' : function(){
+  var USFirstNameSlot = this.event.request.intent.slots.USFirstName.value;
+  var UKFirstNameSlot = this.event.request.intent.slots.UKFirstName.value;
+
+var name;
+if(USFirstNameSlot){
+  name = USFirstNameSlot;
+}
+else if (UKFirstNameSlot){
+ name = UKFirstNameSlot;
+}
+
+
+  if(name){
+    this.attributes['userName'] = name;
+    this.emit(':ask', `OK ${name}! Tell me what country you are from by saying: I'm from, and then the country you're from.`,'Tell me what country you are from by saying: I am from, and then the country you are from.');
+  }
+  else{
+    this.emit(':ask',"Sorry I didnt recognize that name", 'Please tell me your name');
+  }
+
+
+
+},
 'AlexaMeetupNumbers' : function() {
   var meetupNumbers = alexaMeetups.length;
   console.log("meetupNumbers->"+meetupNumbers);
