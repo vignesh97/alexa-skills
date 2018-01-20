@@ -10,6 +10,9 @@ var mainStateHandlers =  require("./handlers/mainStateHandlers");
 
 exports.handler = function(event, context, callback){
   var alexa = Alexa.handler(event, context);
+  console.log('appId:'+constants.appId);
+  console.log('DBName:'+constants.dynamoDBTableName);
+
   alexa.appId = constants.appId;
 
   alexa.dynamoDBTableName = constants.dynamoDBTableName;
