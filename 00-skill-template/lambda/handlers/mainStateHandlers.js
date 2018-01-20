@@ -1,8 +1,8 @@
 var Alexa = require('alexa-sdk');
 
 var constants = require('../constants/constants');
-var alexaMeetups = require("./data/alexaMeetups");
-var convertArrayToReadableString = require('./helpers/convertArrayToReadableString');
+var alexaMeetups = require("../data/alexaMeetups");
+var convertArrayToReadableString = require('../helpers/convertArrayToReadableString');
 
 var mainStateHandlers = Alexa.CreateStateHandler(constants.states.MAIN, {
     'LaunchRequest': function() {
