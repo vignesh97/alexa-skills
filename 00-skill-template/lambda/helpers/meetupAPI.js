@@ -20,5 +20,39 @@ module.exports = {
             });
 
         });
+    },
+    GetMeetupgroupDetails:(accessToken, meetupURL)=>{
+
+        return new Promise((resolve,reject) => {
+        request({
+            url : "https://api.meetup.com/"+meetupURL,
+            qs : {
+                access_token : accessToken,
+                'photo-host' : 'secure',
+                fields : 'next_event,last_event,plain_text_description'
+            },
+            method:'GET',
+            headers:{
+                'Content-Type' : 'application/json'
+            }
+        })
+        .then((response)=>{
+                resolve(JSON.parse(response));
+            })
+            .catch((error)=>{
+                reject('Meetup API Error', error);
+            });
+
+
+
+    });
     }
+
+
+
+
+
+
+
+
 };
