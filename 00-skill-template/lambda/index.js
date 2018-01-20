@@ -34,12 +34,32 @@ else if (UKFirstNameSlot){
     this.emit(':ask', `OK ${name}! Tell me what country you are from by saying: I'm from, and then the country you're from.`,'Tell me what country you are from by saying: I am from, and then the country you are from.');
   }
   else{
-    this.emit(':ask',"Sorry I didnt recognize that name", 'Please tell me your name');
+    this.emit(':ask',"Sorry I didnt recognize that name. Please say again by saying, My name is and your name ", ' Please say your name by saying, My name is and your name' );
   }
 
 
 
 },
+
+
+'CountryCapture' : function() {
+  var country = this.event.request.intent.slots.CountryName.value;
+
+  var userName = this.attributes['userName'];
+
+if(country){
+  this.attributes['userCountry'] = country;
+  this.emit(':ask', `Ok ${userName}! Your from ${country}, that's great! You can ask me various alexa meetups around the world, or listen to the Alexa Dev Podcast. What do you like to do? `,'You can ask me various alexa meetups around the world, or listen to the Alexa Dev Podcast. What do you like to do?');
+}else{
+  this.emit(':ask', `Sorry!, I did not recongnize that!. Please Tell me what country you are from by saying: I'm from, and then the country name`,'Tell me what country you are from by saying: I am from, and then the country name');
+
+}
+
+},
+
+
+
+
 'AlexaMeetupNumbers' : function() {
   var meetupNumbers = alexaMeetups.length;
   console.log("meetupNumbers->"+meetupNumbers);
@@ -75,6 +95,16 @@ else{
 }
 }
 ,
+
+
+
+
+
+
+
+
+
+
 'AlexaMeetupOrganiserCheck' : function() {
   var USCitySlot = this.event.request.intent.slots.USCity.value;
   var EuropeCitySlot = this.event.request.intent.slots.EuropeCity.value;
