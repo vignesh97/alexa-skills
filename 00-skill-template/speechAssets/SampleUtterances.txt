@@ -16,8 +16,3 @@ AlexaMeetupOrganiserCheck {USCity} organiser
 AlexaMeetupOrganiserCheck {EuropeCity} organiser
 
 
-NameCapture my name is {USFirstName}
-NameCapture my name is {UKFirstName}
-
-CountryCapture I am from {CountryName}
-CountryCapture I'm from {CountryName}

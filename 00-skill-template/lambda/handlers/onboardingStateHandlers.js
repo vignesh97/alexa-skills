@@ -3,6 +3,9 @@ var Alexa = require('alexa-sdk');
 var constants = require('../constants/constants');
 
 
+var meetupAPI = require('../helpers/meetupAPI');
+
+
 var onboardingStateHandlers = Alexa.CreateStateHandler(constants.states.ONBOARDING, {
 
 
@@ -14,7 +17,28 @@ var onboardingStateHandlers = Alexa.CreateStateHandler(constants.states.ONBOARDI
             this.emitWithState('LaunchRequest');
 
         } else {
-            this.emit(":ask", "Welcome to Voice Devs, The skill that gives you information about the alexa developer community. But first, I like to get the know you better. Tell me your name by Saying My is name and your name", 'Tell me your name by saying My is name and your name');
+          
+          
+            var accessToken = this.event.session.user.accessToken;
+
+            if(accessToken){
+
+                //Get user details 
+                meetupAPI.GetUserDetails(accessToken)
+                .then((userDetails) =>{
+                    var name = userDetails.name;
+                    this.attributes['userName']= name;
+                    this.handler.state = constants.states.MAIN;
+                    this.emit(':ask', `Hi ${name}! Welcome to Voice Devs. Do you like to check dev meetups or listen podcasts. What do you like to do?`,'Do you like to check dev meetups or listen podcasts. What do you like to do?');
+                }).catch((error)=>{
+                    console.log('Meetup API Error', error);
+                    this.emit(':tell','Sorry, there was a problem. Contact Developer');
+                });
+            }
+            else{
+                this.emit(':tellWithLinkAccountCard', 'Please link your account to use this skill, I have sent the details in your alexa app' );
+            }
+          //  this.emit(":ask", "Welcome to Voice Devs, The skill that gives you information about the alexa developer community. But first, I like to get the know you better. Tell me your name by Saying My is name and your name", 'Tell me your name by saying My is name and your name');
         }
 
     },
@@ -74,18 +98,7 @@ var onboardingStateHandlers = Alexa.CreateStateHandler(constants.states.ONBOARDI
     },
     'AMAZON.HelpIntent': function() {
       console.log("Onboarding Help");
-
-        this.emit(':tell', 'Good Bye');
-
-        var userName = this.attributes['userName'];
-        if (userName) {
-
-            this.emit(':ask', `OK ${name}! Tell me what country you are from by saying: I'm from, and then the country you're from.`, 'Tell me what country you are from by saying: I am from, and then the country you are from.');
-        } else {
-            this.emit(':ask', "Sorry I didnt recognize that name. Please say again by saying, My name is and your name ", ' Please say your name by saying, My name is and your name');
-
-        }
-
+                      this.emit(':tellWithLinkAccountCard', 'Please link your account to use this skill, I have sent the details in your alexa app' );
     },
 
     'UnHandled': function() {

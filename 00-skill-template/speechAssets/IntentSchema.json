@@ -1,19 +1,6 @@
 {
   "intents": [
-  {
-    "intent" : "NameCapture",
-    "slots" : [
-      {
-        "name" : "USFirstName",
-        "type" : "AMAZON.US_FIRST_NAME"
-      }
-    ,
-    {
-      "name" : "UKFirstName",
-      "type" : "AMAZON.GB_FIRST_NAME"
-    }
-    ]
-  },
+ 
     {
       "intent": "AMAZON.StopIntent"
     },
@@ -49,15 +36,6 @@
         {
           "name" : "EuropeCity",
           "type" : "AMAZON.EUROPE_CITY"
-        }
-      ]
-    },
-    {
-      "intent" : "CountryCapture",
-      "slots":[
-        {
-          "name" : "CountryName",
-          "type" : "WORLD_COUNTRIES"
         }
       ]
     }
