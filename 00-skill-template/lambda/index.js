@@ -41,7 +41,7 @@ else if (UKFirstNameSlot){
 
 },
 
-
+//Save name and country to the session object
 'CountryCapture' : function() {
   var country = this.event.request.intent.slots.CountryName.value;
 
@@ -52,7 +52,6 @@ if(country){
   this.emit(':ask', `Ok ${userName}! Your from ${country}, that's great! You can ask me various alexa meetups around the world, or listen to the Alexa Dev Podcast. What do you like to do? `,'You can ask me various alexa meetups around the world, or listen to the Alexa Dev Podcast. What do you like to do?');
 }else{
   this.emit(':ask', `Sorry!, I did not recongnize that!. Please Tell me what country you are from by saying: I'm from, and then the country name`,'Tell me what country you are from by saying: I am from, and then the country name');
-
 }
 
 },
