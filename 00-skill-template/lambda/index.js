@@ -6,19 +6,29 @@ var alexaMeetups = require("./data/alexaMeetups");
 var convertArrayToReadableString = require('./helpers/convertArrayToReadableString')
 exports.handler = function(event, context, callback){
   var alexa = Alexa.handler(event, context);
+  alexa.dynamoDBTableName = "VoiceDevUsers";
   alexa.registerHandlers(handlers);
   alexa.execute();
 };
 
 var handlers = {
 
-'NewSession' : function(){
-  this.emit(":ask", "Welcome to Voice Devs, The skill that gives you information about the alexa developer community. But first, I like to get the know you better. Tell me your name by Saying My is name and your name",'Tell me your name by saying My is name and your name');
-},
+  'NewSession' : function(){
+      var userName = this.attributes['userName'];
+      if(userName)
+        {
+          this.emit(':ask', `Welcome ${userName}!  You can ask me various alexa meetups around the world, or listen to the Alexa Dev Podcast. What do you like to do? `,'You can ask me various alexa meetups around the world, or listen to the Alexa Dev Podcast. What do you like to do?');
+        }
+        else{
+          this.emit(":ask", "Welcome to Voice Devs, The skill that gives you information about the alexa developer community. But first, I like to get the know you better. Tell me your name by Saying My is name and your name",'Tell me your name by saying My is name and your name');
 
-'NameCapture' : function(){
-  var USFirstNameSlot = this.event.request.intent.slots.USFirstName.value;
-  var UKFirstNameSlot = this.event.request.intent.slots.UKFirstName.value;
+        }
+
+  },
+
+  'NameCapture' : function(){
+    var USFirstNameSlot = this.event.request.intent.slots.USFirstName.value;
+    var UKFirstNameSlot = this.event.request.intent.slots.UKFirstName.value;
 
 var name;
 if(USFirstNameSlot){
@@ -144,7 +154,12 @@ else{
   this.emit(':ask', `Sorry, we dont have meetup in your city  ${city}. `, 'How can i help?');
 }
 
+},
+
+'AMAZON.StopIntent' : function(){
+  this.emit(':tell','Good Bye');
 }
+
 
 
 
