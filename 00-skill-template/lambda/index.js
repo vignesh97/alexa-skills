@@ -158,8 +158,15 @@ else{
 
 'AMAZON.StopIntent' : function(){
   this.emit(':tell','Good Bye');
-}
+},
+'AMAZON.StopIntent' : function(){
+  this.emit(':tell','Good Bye');
+},
 
+
+'SessionEndedRequest' : function(){
+  this.emit(':saveState', true);
+}
 
 
 
