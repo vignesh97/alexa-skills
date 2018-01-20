@@ -78,17 +78,15 @@ var mainStateHandlers = Alexa.CreateStateHandler(constants.states.MAIN, {
 
                 meetupAPI.GetMeetupgroupDetails(accessToken,cityMeetupRL)
                 .then((meetupDetails)=>{
+                    console.log(JSON.stringify(meetupDetails));
                     var organizerName = meetupDetails.organizer.name;
-
 
                     var cardTitle = `${organizerName}`;
                     var cardContent = `The organizer of the   ${city}  Alexa developer meetup is ${organizerName}! `;
                     var imageObj = {
-                        smallImageUrl : `${meetupDetails.organizer.photo.photolink}`,
-                         largeImageUrl : `${meetupDetails.organizer.photo.photolink}`
+                        smallImageUrl : `${meetupDetails.organizer.photo.photo_link}`,
+                         largeImageUrl : `${meetupDetails.organizer.photo.photo_link}`
                     };
-
-
 
                                     this.emit(':askWithCard', `The organizer of the   ${city}  Alexa developer meetup is ${organizerName}!. I have sent info to your alexa app`, 'How can i help?', cardTitle,cardContent, imageObj);
 
