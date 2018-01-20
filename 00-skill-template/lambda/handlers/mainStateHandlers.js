@@ -3,6 +3,8 @@ var Alexa = require('alexa-sdk');
 var constants = require('../constants/constants');
 var alexaMeetups = require("../data/alexaMeetups");
 var convertArrayToReadableString = require('../helpers/convertArrayToReadableString');
+var meetupAPI = require('../helpers/meetupAPI');
+
 
 var mainStateHandlers = Alexa.CreateStateHandler(constants.states.MAIN, {
     'LaunchRequest': function() {
@@ -61,23 +63,41 @@ var mainStateHandlers = Alexa.CreateStateHandler(constants.states.MAIN, {
         }
 
         var cityMatch = "";
-        var cityOrganizers;
-
+        var cityMeetupRL="";
         for (var i = 0; i < alexaMeetups.length; i++) {
             if (alexaMeetups[i].city.toLowerCase() === city.toLowerCase()) {
                 cityMatch = alexaMeetups[i].city;
-                cityOrganizers = alexaMeetups[i].organisers;
+                cityMeetupRL = alexaMeetups[i].meetupURL;
             }
         }
 
         if (cityMatch !== "") {
-            if (cityOrganizers.length === 1) {
-                this.emit(':ask', `The organizer of the   ${city}  Alexa developer meetup is ${cityOrganizers[0]}! `, 'How can i help?');
-            } else {
+            var accessToken= this.event.session.user.accessToken;
+            if(accessToken){
 
-                this.emit(':ask', `The organizer of the   ${city}  Alexa developer meetup are  ${convertArrayToReadableString(cityOrganizers)}! `, 'How can i help?');
+
+                meetupAPI.GetMeetupgroupDetails(accessToken,cityMeetupRL)
+                .then((meetupDetails)=>{
+                    var organizerName = meetupDetails.organizer.name;
+
+
+                    var cardTitle = `${organizerName}`;
+                    var cardContent = `The organizer of the   ${city}  Alexa developer meetup is ${organizerName}! `;
+                    var imageObj = {
+                        smallImageUrl : `${meetupDetails.organizer.photo.photolink}`,
+                         largeImageUrl : `${meetupDetails.organizer.photo.photolink}`
+                    };
+
+
+
+                                    this.emit(':askWithCard', `The organizer of the   ${city}  Alexa developer meetup is ${organizerName}!. I have sent info to your alexa app`, 'How can i help?', cardTitle,cardContent, imageObj);
+
+                }).catch((error)=>{
+                    console.log("Meetup API Error:", error);
+                    this.emit(':tell', 'Something went wrong');
+                });
             }
-
+        
 
         } else {
             this.emit(':ask', `Sorry, we dont have meetup in your city  ${city}. `, 'How can i help?');
